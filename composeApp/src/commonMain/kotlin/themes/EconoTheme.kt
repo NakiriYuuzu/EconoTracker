@@ -21,6 +21,7 @@ fun EconoTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
+        typography = PoppinsTypography()
     ) {
         if (useSurface) {
             Surface(modifier = Modifier.fillMaxSize()) {

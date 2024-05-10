@@ -1,13 +1,20 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.room)
+//    alias(libs.plugins.room)
 }
 
 kotlin {
+    @OptIn(ExperimentalKotlinGradlePluginApi::class)
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
+
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -28,7 +35,6 @@ kotlin {
     }
     
     sourceSets {
-        
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
@@ -44,7 +50,7 @@ kotlin {
 
             implementation(libs.kolor.core)
             implementation(libs.kermit.core)
-            implementation(libs.bundles.room)
+//            implementation(libs.bundles.room)
             implementation(libs.bundles.koin.main)
             implementation(libs.bundles.kotlinx)
             implementation(libs.bundles.ktorfit)
@@ -88,12 +94,12 @@ android {
     }
 }
 
-room {
-    schemaDirectory("$projectDir/schemas")
-}
+//room {
+//    schemaDirectory("$projectDir/schemas")
+//}
 
 dependencies {
-    ksp(libs.room.compiler)
+//    ksp(libs.room.compiler)
     with(libs.ktorfit.ksp) {
         add("kspCommonMainMetadata", this)
         add("kspAndroid", this)
