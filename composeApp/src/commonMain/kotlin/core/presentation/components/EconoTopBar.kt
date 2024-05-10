@@ -31,8 +31,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import core.presentation.components.utils.DropDownItem
 import econotracker.composeapp.generated.resources.Res
-import econotracker.composeapp.generated.resources.go_back
-import econotracker.composeapp.generated.resources.open_menu
+import econotracker.composeapp.generated.resources.btn_go_back
+import econotracker.composeapp.generated.resources.btn_open_menu
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -74,7 +74,7 @@ fun EconoTopBar(
                 IconButton(onClick = onBackClick) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = stringResource(Res.string.go_back),
+                        contentDescription = stringResource(Res.string.btn_go_back),
                         tint = MaterialTheme.colorScheme.onBackground
                     )
                 }
@@ -93,16 +93,18 @@ fun EconoTopBar(
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier
-                                    .clickable { onMenuItemClick(index) }
+                                    .clickable { isDropDownOpen = false; onMenuItemClick(index) }
                                     .fillMaxWidth()
                                     .padding(16.dp)
                             ) {
-                                Icon(
-                                    imageVector = item.icon,
-                                    contentDescription = item.title
-                                )
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Text(text = item.title)
+                                if (item.active) {
+                                    Icon(
+                                        imageVector = item.icon,
+                                        contentDescription = item.title.toString()
+                                    )
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    item.title.invoke()
+                                }
                             }
                         }
                     }
@@ -111,7 +113,7 @@ fun EconoTopBar(
                     }) {
                         Icon(
                             imageVector = Icons.Default.MoreVert,
-                            contentDescription = stringResource(resource = Res.string.open_menu),
+                            contentDescription = stringResource(resource = Res.string.btn_open_menu),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }

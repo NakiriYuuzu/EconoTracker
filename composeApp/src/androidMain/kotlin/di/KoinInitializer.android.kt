@@ -10,7 +10,7 @@ actual class KoinInitializer(private val context: Context) {
         startKoin {
             androidContext(context)
             androidLogger()
-            modules(appModule)
+            modules(appModules)
         }
     }
 }

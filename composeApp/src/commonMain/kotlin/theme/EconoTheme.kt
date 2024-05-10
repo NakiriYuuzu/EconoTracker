@@ -8,26 +8,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.materialkolor.rememberDynamicColorScheme
+import core.data.source.preference.ThemeMode
 
 @Composable
 fun EconoTheme(
     seedColor: Color = Color(0xFF63A002),
-    useSurface: Boolean = false,
-    useDarkTheme: Boolean = isSystemInDarkTheme(),
+    useDarkTheme: ThemeMode,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = rememberDynamicColorScheme(seedColor, useDarkTheme)
-
+    println("EconoTheme: $useDarkTheme")
+    val isDarkTheme = when (useDarkTheme) {
+        ThemeMode.SYSTEM -> isSystemInDarkTheme()
+        ThemeMode.LIGHT -> false
+        ThemeMode.DARK -> true
+    }
+    val colorScheme = rememberDynamicColorScheme(seedColor, isDarkTheme)
 
     MaterialTheme(
         colorScheme = colorScheme,
         typography = PoppinsTypography()
     ) {
-        if (useSurface) {
-            Surface(modifier = Modifier.fillMaxSize()) {
-                content()
-            }
-        } else {
+        Surface(modifier = Modifier.fillMaxSize()) {
             content()
         }
     }

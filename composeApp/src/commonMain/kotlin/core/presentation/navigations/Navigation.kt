@@ -1,39 +1,35 @@
 package core.presentation.navigations
 
+import MainViewModel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import core.presentation.splash.SplashAction
-import core.presentation.splash.SplashPresenter
+import core.presentation.expense.home.HomeScreen
+import core.presentation.setting.SettingScreen
 import core.presentation.splash.SplashScreen
-import kotlinx.coroutines.delay
-import logging.Logger
-import moe.tlaster.precompose.molecule.producePresenter
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.PopUpTo
 import moe.tlaster.precompose.navigation.RouteBuilder
-import org.koin.compose.koinInject
-
 
 @Composable
 fun Navigation(
-    navigator: Navigator
+    navigator: Navigator,
+    viewModel: MainViewModel
 ) {
     NavHost(
         navigator = navigator,
-        initialRoute = NavigationGraph.InitialGroup.ROOT_ROUTE
+        initialRoute = NavigationGraph.SplashGroup.ROOT_ROUTE
     ) {
         initialGraph(navigator)
         expenseGraph(navigator)
+        settingGraph(navigator, viewModel)
     }
 }
 
@@ -41,18 +37,20 @@ private fun RouteBuilder.initialGraph(
     navigator: Navigator
 ) {
     group(
-        route = NavigationGraph.InitialGroup.ROOT_ROUTE,
-        initialRoute = NavigationGraph.InitialGroup.Splash.route
+        route = NavigationGraph.SplashGroup.ROOT_ROUTE,
+        initialRoute = NavigationGraph.SplashGroup.Splash.route
     ) {
         scene(
-            route = NavigationGraph.InitialGroup.Splash.route
+            route = NavigationGraph.SplashGroup.Splash.route,
+            navTransition = swipeAnimationIOS(),
+            swipeProperties = swipeLikeIOS()
         ) {
             SplashScreen(onNextScreenNavigate = {
                 navigator.navigate(
-                    route = NavigationGraph.ExpenseGroup.Home.route,
+                    route = NavigationGraph.ExpenseGroup.ROOT_ROUTE,
                     options = NavOptions(
                         popUpTo = PopUpTo(
-                            route = NavigationGraph.ExpenseGroup.Home.route,
+                            route = NavigationGraph.SplashGroup.ROOT_ROUTE,
                             inclusive = true
                         )
                     )
@@ -74,29 +72,11 @@ private fun RouteBuilder.expenseGraph(
             swipeProperties = swipeLikeIOS(),
             navTransition = swipeAnimationIOS()
         ) {
-            val presenter by producePresenter { SplashPresenter(koinInject<Logger>()) }
-
-            LaunchedEffect(presenter.count) {
-                try {
-                    delay(1000)
-                    presenter.onAction(SplashAction.UpdateCount)
-                }catch (e: Exception) {
-                    println(e.message)
+            HomeScreen(
+                onSettingClick = {
+                    navigator.navigate(route = NavigationGraph.SettingGroup.ROOT_ROUTE)
                 }
-            }
-
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Button(onClick = {
-                    navigator.navigate(NavigationGraph.ExpenseGroup.Detail.route)
-                }) { Text("Go To Details ${presenter.count}") }
-                Button(onClick = {
-                    navigator.popBackStack()
-                }) { Text("Go Back") }
-            }
+            )
         }
         scene(
             route = NavigationGraph.ExpenseGroup.Detail.route,
@@ -112,6 +92,26 @@ private fun RouteBuilder.expenseGraph(
                     navigator.popBackStack()
                 }) { Text("Go Back") }
             }
+        }
+    }
+}
+
+private fun RouteBuilder.settingGraph(navigator: Navigator, viewModel: MainViewModel) {
+    group(
+        route = NavigationGraph.SettingGroup.ROOT_ROUTE,
+        initialRoute = NavigationGraph.SettingGroup.Setting.route
+    ) {
+        scene(
+            route = NavigationGraph.SettingGroup.Setting.route,
+            navTransition = swipeAnimationIOS(),
+            swipeProperties = swipeLikeIOS()
+        ) {
+            SettingScreen(
+                viewModel = viewModel,
+                onBackClicked = {
+                    navigator.popBackStack()
+                }
+            )
         }
     }
 }
