@@ -1,5 +1,5 @@
 import androidx.compose.runtime.*
-import core.presentation.navigators.Navigation
+import core.presentation.navigations.Navigation
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.navigation.rememberNavigator

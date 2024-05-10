@@ -1,4 +1,4 @@
-package core.presentation.navigators
+package core.presentation.navigations
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

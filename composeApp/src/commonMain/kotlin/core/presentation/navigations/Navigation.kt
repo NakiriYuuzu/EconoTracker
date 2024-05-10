@@ -1,4 +1,4 @@
-package core.presentation.navigators
+package core.presentation.navigations
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,11 +10,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import core.data.source.remote.AdhdApi
 import core.presentation.splash.SplashAction
 import core.presentation.splash.SplashPresenter
 import core.presentation.splash.SplashScreen
+import de.jensklingenberg.ktorfit.Ktorfit
 import kotlinx.coroutines.delay
 import loggings.Logger
+import moe.tlaster.precompose.flow.collectAsStateWithLifecycle
 import moe.tlaster.precompose.molecule.producePresenter
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.NavOptions
@@ -61,9 +64,16 @@ private fun RouteBuilder.expenseGraph(navigator: Navigator) {
         swipeProperties = swipeLikeIOS(),
         navTransition = swipeAnimationIOS()
     ) {
-        val presenter by producePresenter { SplashPresenter(logger = koinInject<Logger>()) }
+        val logger = koinInject<Logger>()
+        val presenter by producePresenter { SplashPresenter(logger = logger) }
+        val request = koinInject<Ktorfit>().create<AdhdApi>()
 
         LaunchedEffect(presenter.count) {
+            val networkCall = request.getLevels()
+            request.getLevelsFlow().collect {
+                logger.e("Network Flow:") { it.toString() }
+            }
+            logger.e("Network Call:") { networkCall.toString() }
             delay(1000)
             presenter.onAction(SplashAction.UpdateCount)
         }

@@ -66,8 +66,9 @@ kolor-core = { module = "com.materialkolor:material-kolor", version.ref = "kolor
 
 ktorfit-ksp = { module = "de.jensklingenberg.ktorfit:ktorfit-ksp", version.ref = "ktorfit" }
 ktorfit-lib = { module = "de.jensklingenberg.ktorfit:ktorfit-lib", version.ref = "ktorfit" }
-ktor-json = { module = "io.ktor:ktor-client-json", version.ref = "ktor" }
-ktor-serilization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktor" }
+ktorfit-flow = { module = "de.jensklingenberg.ktorfit:ktorfit-converters-flow", version.ref = "ktorfit" }
+ktor-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktor" }
 ktor-contentNegotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
@@ -95,12 +96,13 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 room = { id = "androidx.room", version.ref = "room" }
+ktorfit = { id = "de.jensklingenberg.ktorfit", version.ref = "ktorfit" }
 
 [bundles]
 multiplatformSettings = ["multiplatformSettings-serilization", "multiplatformSettings-coroutines", "multiplatformSettings-noArg"]
 precompose = ["precompose-navigator", "precompose-viewmodel", "precompose-koin", "precompose-molecule", "molecule-runtime"]
 koin-android = ["koin-android", "koin-androidx-compose"]
 koin-main = ["koin-core", "koin-compose"]
-ktorfit = ["ktorfit-lib", "ktor-json", "ktor-serilization", "ktor-contentNegotiation"]
+ktorfit = ["ktorfit-lib", "ktorfit-flow", "ktor-json", "ktor-serialization", "ktor-contentNegotiation"]
 kotlinx = ["kotlinx-datetime", "kotlinx-serialization"]
 room = ["room-runtime", "sqlite-bundled"]

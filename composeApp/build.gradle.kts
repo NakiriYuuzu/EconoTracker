@@ -1,3 +1,4 @@
+import org.jetbrains.compose.ComposeExtension
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
@@ -6,6 +7,7 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.ktorfit)
 //    alias(libs.plugins.room)
 }
 
@@ -18,7 +20,7 @@ kotlin {
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = JavaVersion.VERSION_11.toString()
+                jvmTarget = JavaVersion.VERSION_17.toString()
             }
         }
     }
@@ -36,9 +38,11 @@ kotlin {
     
     sourceSets {
         androidMain.dependencies {
-            implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.bundles.koin.android)
+            api(compose.preview)
+            api(compose.uiTooling)
+            api(compose.components.uiToolingPreview)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -75,6 +79,17 @@ android {
         versionCode = 1
         versionName = "1.0"
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        val fullVersion = extensions.getByType(ComposeExtension::class.java)
+            .dependencies.compiler.auto.substringAfterLast(":")
+        val mainVersion = fullVersion.split(".").take(3).joinToString(".")
+        println(mainVersion)
+        kotlinCompilerExtensionVersion = mainVersion
+
+    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -86,8 +101,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     dependencies {
         debugImplementation(compose.uiTooling)
