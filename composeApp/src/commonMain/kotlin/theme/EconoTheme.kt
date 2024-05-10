@@ -1,4 +1,4 @@
-package themes
+package theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize

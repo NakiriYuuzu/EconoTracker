@@ -1,4 +1,4 @@
-package loggings
+package logging
 
 interface Logger {
     fun v(tag: String, throwable: Throwable? = null, message: () -> String = { "" }) = Unit

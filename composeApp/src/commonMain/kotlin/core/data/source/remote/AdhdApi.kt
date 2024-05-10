@@ -1,7 +1,7 @@
 package core.data.source.remote
 
+import de.jensklingenberg.ktorfit.Response
 import de.jensklingenberg.ktorfit.http.GET
-import de.jensklingenberg.ktorfit.http.POST
 import kotlinx.coroutines.flow.Flow
 
 interface AdhdApi {
@@ -10,10 +10,10 @@ interface AdhdApi {
     }
 
     @GET("Levels")
-    suspend fun getLevels(): List<LevelsItem>
+    fun getLevelsFlow(): Flow<List<LevelsItem>>
 
     @GET("Levels")
-    fun getLevelsFlow(): Flow<List<LevelsItem>>
+    suspend fun getLevelsResponse(): Response<List<LevelsItem>>
 
 //    @GET("Levels")
 //    suspend fun getLevelsResponse(): Response<List<LevelsItem>>

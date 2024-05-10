@@ -1,4 +1,4 @@
-package loggings
+package logging
 
 class KermitLogger : Logger {
     override fun v(tag: String, throwable: Throwable?, message: () -> String) {

@@ -2,6 +2,7 @@ package core.data.source.remote
 
 import de.jensklingenberg.ktorfit.Ktorfit
 import de.jensklingenberg.ktorfit.converter.FlowConverterFactory
+import de.jensklingenberg.ktorfit.converter.ResponseConverterFactory
 import de.jensklingenberg.ktorfit.ktorfit
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -23,6 +24,7 @@ class KtorfitFactory {
                 }
             })
             converterFactories(
+                ResponseConverterFactory(),
                 FlowConverterFactory()
             )
         }
