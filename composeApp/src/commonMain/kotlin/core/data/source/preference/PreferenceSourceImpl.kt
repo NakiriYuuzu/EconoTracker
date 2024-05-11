@@ -12,14 +12,20 @@ class PreferenceSourceImpl(settings: Settings): EconoSource.Preference {
 
     override suspend fun getThemeMode(): ThemeMode {
         suspendSettings.getString(DARK_MODE_KEY, ThemeMode.SYSTEM.name).let {
-            println("getDarkTheme: $it")
             return ThemeMode.valueOf(it)
         }
     }
 
     override suspend fun setDarkMode(theme: ThemeMode) {
-        println("setDarkTheme: $theme")
         suspendSettings.putString(DARK_MODE_KEY, theme.name)
+    }
+
+    override suspend fun getThemeColor(): String {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun setThemeColor(color: String) {
+        TODO("Not yet implemented")
     }
 
     companion object {

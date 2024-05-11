@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -40,15 +41,13 @@ fun SplashScreen(
         onNextScreenNavigate()
     }
 
-    Box(
-        modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
+    Surface(modifier = modifier.fillMaxSize()) {
         // create a animated splash screen
         AnimatedVisibility(
             visible = visible,
             enter = scaleIn(),
-            exit = scaleOut()
+            exit = scaleOut(),
+            modifier = Modifier.fillMaxSize()
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,

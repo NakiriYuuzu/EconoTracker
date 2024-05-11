@@ -54,6 +54,8 @@ kotlin {
 
             implementation(libs.kolor.core)
             implementation(libs.kermit.core)
+            implementation(libs.windowSizeClass)
+
 //            implementation(libs.bundles.room)
             implementation(libs.bundles.koin.main)
             implementation(libs.bundles.kotlinx)
@@ -86,7 +88,6 @@ android {
         val fullVersion = extensions.getByType(ComposeExtension::class.java)
             .dependencies.compiler.auto.substringAfterLast(":")
         val mainVersion = fullVersion.split(".").take(3).joinToString(".")
-        println(mainVersion)
         kotlinCompilerExtensionVersion = mainVersion
 
     }

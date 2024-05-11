@@ -1,7 +1,11 @@
 package theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -16,7 +20,6 @@ fun EconoTheme(
     useDarkTheme: ThemeMode,
     content: @Composable () -> Unit
 ) {
-    println("EconoTheme: $useDarkTheme")
     val isDarkTheme = when (useDarkTheme) {
         ThemeMode.SYSTEM -> isSystemInDarkTheme()
         ThemeMode.LIGHT -> false
@@ -27,9 +30,5 @@ fun EconoTheme(
     MaterialTheme(
         colorScheme = colorScheme,
         typography = PoppinsTypography()
-    ) {
-        Surface(modifier = Modifier.fillMaxSize()) {
-            content()
-        }
-    }
+    ) { content() }
 }

@@ -14,5 +14,7 @@ interface EconoSource {
     interface Preference {
         suspend fun getThemeMode(): ThemeMode
         suspend fun setDarkMode(theme: ThemeMode)
+        suspend fun getThemeColor(): String
+        suspend fun setThemeColor(color: String)
     }
 }

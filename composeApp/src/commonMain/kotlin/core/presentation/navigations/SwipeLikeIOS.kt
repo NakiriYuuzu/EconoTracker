@@ -25,7 +25,7 @@ fun swipeAnimationIOS(): NavTransition {
  * @param velocityThreshold The velocity threshold to trigger the navigation
  */
 fun swipeLikeIOS(
-    spaceToSwipe: Dp = 100.dp,
+    spaceToSwipe: Dp = 56.dp,
     positionalThreshold: (totalDistance: Float) -> Float = { totalDistance -> totalDistance * 0.5f },
     velocityThreshold: Density.() -> Float = { 56.dp.toPx() }
 ) : SwipeProperties {

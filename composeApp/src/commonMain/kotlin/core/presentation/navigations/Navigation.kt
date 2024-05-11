@@ -25,7 +25,9 @@ fun Navigation(
 ) {
     NavHost(
         navigator = navigator,
-        initialRoute = NavigationGraph.SplashGroup.ROOT_ROUTE
+        initialRoute = NavigationGraph.SplashGroup.ROOT_ROUTE,
+        navTransition = swipeAnimationIOS(),
+        swipeProperties = swipeLikeIOS()
     ) {
         initialGraph(navigator)
         expenseGraph(navigator)
@@ -40,11 +42,7 @@ private fun RouteBuilder.initialGraph(
         route = NavigationGraph.SplashGroup.ROOT_ROUTE,
         initialRoute = NavigationGraph.SplashGroup.Splash.route
     ) {
-        scene(
-            route = NavigationGraph.SplashGroup.Splash.route,
-            navTransition = swipeAnimationIOS(),
-            swipeProperties = swipeLikeIOS()
-        ) {
+        scene(route = NavigationGraph.SplashGroup.Splash.route) {
             SplashScreen(onNextScreenNavigate = {
                 navigator.navigate(
                     route = NavigationGraph.ExpenseGroup.ROOT_ROUTE,
@@ -67,22 +65,14 @@ private fun RouteBuilder.expenseGraph(
         route = NavigationGraph.ExpenseGroup.ROOT_ROUTE,
         initialRoute = NavigationGraph.ExpenseGroup.Home.route
     ) {
-        scene(
-            route = NavigationGraph.ExpenseGroup.Home.route,
-            swipeProperties = swipeLikeIOS(),
-            navTransition = swipeAnimationIOS()
-        ) {
+        scene(route = NavigationGraph.ExpenseGroup.Home.route,) {
             HomeScreen(
                 onSettingClick = {
                     navigator.navigate(route = NavigationGraph.SettingGroup.ROOT_ROUTE)
                 }
             )
         }
-        scene(
-            route = NavigationGraph.ExpenseGroup.Detail.route,
-            swipeProperties = swipeLikeIOS(),
-            navTransition = swipeAnimationIOS()
-        ) {
+        scene(route = NavigationGraph.ExpenseGroup.Detail.route,) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -101,11 +91,7 @@ private fun RouteBuilder.settingGraph(navigator: Navigator, viewModel: MainViewM
         route = NavigationGraph.SettingGroup.ROOT_ROUTE,
         initialRoute = NavigationGraph.SettingGroup.Setting.route
     ) {
-        scene(
-            route = NavigationGraph.SettingGroup.Setting.route,
-            navTransition = swipeAnimationIOS(),
-            swipeProperties = swipeLikeIOS()
-        ) {
+        scene(route = NavigationGraph.SettingGroup.Setting.route) {
             SettingScreen(
                 viewModel = viewModel,
                 onBackClicked = {
