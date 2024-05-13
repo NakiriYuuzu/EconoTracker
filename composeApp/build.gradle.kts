@@ -17,13 +17,9 @@ kotlin {
         freeCompilerArgs.add("-Xexpect-actual-classes")
     }
 
-    androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = JavaVersion.VERSION_17.toString()
-            }
-        }
-    }
+    jvmToolchain(17)
+
+    androidTarget()
     
     listOf(
         iosX64(),
@@ -81,6 +77,7 @@ android {
         versionCode = 1
         versionName = "1.0"
     }
+    buildToolsVersion = "34.0.0"
     buildFeatures {
         compose = true
     }

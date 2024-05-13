@@ -6,6 +6,7 @@ import core.data.source.EconoSource
 import core.data.source.preference.PreferenceSourceImpl
 import core.data.source.remote.AdhdApi
 import core.data.source.remote.KtorfitFactory
+import core.presentation.setting.SettingViewModel
 import de.jensklingenberg.ktorfit.Ktorfit
 import logging.KermitLogger
 import logging.Logger
@@ -27,6 +28,7 @@ val serviceModule = module {
 
 val viewModelModule = module {
     singleOf(::MainViewModel)
+    singleOf(::SettingViewModel)
 }
 
 val appModules = listOf(

@@ -11,6 +11,7 @@ import moe.tlaster.precompose.navigation.rememberNavigator
 import org.koin.compose.KoinContext
 import theme.EconoTheme
 import util.LocalWindowSizeClass
+import util.toLongColor
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
@@ -22,19 +23,15 @@ fun App() {
                 LocalWindowSizeClass provides calculateWindowSizeClass()
             ) {
                 val navigator = rememberNavigator()
-
                 val viewModel = koinViewModel(MainViewModel::class)
-                val state by viewModel.useDarkTheme.collectAsStateWithLifecycle()
-
-                val randomSeedColor = remember { (0..0xFFFFFF).random() }
+                val state by viewModel.state.collectAsStateWithLifecycle()
 
                 EconoTheme(
-                    seedColor = Color(randomSeedColor),
-                    useDarkTheme = state
+                    seedColor = Color(state.useThemeColor.toLongColor()),
+                    useDarkTheme = state.useDarkTheme
                 ) {
                     Navigation(
-                        navigator = navigator,
-                        viewModel = viewModel
+                        navigator = navigator
                     )
                 }
             }

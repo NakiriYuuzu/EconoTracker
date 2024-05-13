@@ -1,6 +1,5 @@
 package core.presentation.navigations
 
-import MainViewModel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import core.presentation.expense.home.HomeScreen
-import core.presentation.setting.SettingScreen
+import core.presentation.setting.SettingScreenRoot
 import core.presentation.splash.SplashScreen
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.NavOptions
@@ -21,10 +20,7 @@ import moe.tlaster.precompose.navigation.RouteBuilder
 import moe.tlaster.precompose.navigation.SwipeProperties
 
 @Composable
-fun Navigation(
-    navigator: Navigator,
-    viewModel: MainViewModel
-) {
+fun Navigation(navigator: Navigator) {
     NavHost(
         navigator = navigator,
         initialRoute = NavigationGraph.SplashGroup.ROOT_ROUTE,
@@ -33,7 +29,7 @@ fun Navigation(
     ) {
         initialGraph(navigator)
         expenseGraph(navigator)
-        settingGraph(navigator, viewModel)
+        settingGraph(navigator)
     }
 }
 
@@ -88,14 +84,13 @@ private fun RouteBuilder.expenseGraph(
     }
 }
 
-private fun RouteBuilder.settingGraph(navigator: Navigator, viewModel: MainViewModel) {
+private fun RouteBuilder.settingGraph(navigator: Navigator) {
     group(
         route = NavigationGraph.SettingGroup.ROOT_ROUTE,
         initialRoute = NavigationGraph.SettingGroup.Setting.route
     ) {
         scene(route = NavigationGraph.SettingGroup.Setting.route) {
-            SettingScreen(
-                viewModel = viewModel,
+            SettingScreenRoot(
                 onBackClicked = {
                     navigator.popBackStack()
                 }

@@ -7,9 +7,11 @@ import androidx.compose.ui.graphics.Color
 import com.materialkolor.rememberDynamicColorScheme
 import core.data.source.preference.ThemeMode
 
+const val COLOR = 0xFF63A002
+
 @Composable
 fun EconoTheme(
-    seedColor: Color = Color(0xFF63A002),
+    seedColor: Color = Color(color = COLOR),
     useDarkTheme: ThemeMode,
     content: @Composable () -> Unit
 ) {

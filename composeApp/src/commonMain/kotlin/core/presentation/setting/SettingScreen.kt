@@ -1,8 +1,5 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package core.presentation.setting
 
-import MainViewModel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,10 +11,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -34,12 +27,31 @@ import econotracker.composeapp.generated.resources.setting_color_theme_title
 import econotracker.composeapp.generated.resources.setting_style_theme_desc
 import econotracker.composeapp.generated.resources.setting_style_theme_title
 import econotracker.composeapp.generated.resources.setting_style_title
+import moe.tlaster.precompose.koin.koinViewModel
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun SettingScreen(
-    viewModel: MainViewModel,
+fun SettingScreenRoot(
+    viewModel: SettingViewModel = koinViewModel(SettingViewModel::class),
     onBackClicked: () -> Unit
+) {
+    SettingScreen(
+        state = viewModel.state,
+        onAction = { action ->
+            when (action) {
+                SettingAction.OnBackClick -> onBackClicked()
+                else -> Unit
+            }
+            viewModel.onAction(action)
+        }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SettingScreen(
+    state: SettingState,
+    onAction: (SettingAction) -> Unit
 ) {
     EconoScaffold(
         topAppBar = {
@@ -47,7 +59,7 @@ fun SettingScreen(
                 showBackButton = true,
                 title = stringResource(Res.string.menu_setting),
                 onBackClick = {
-                    onBackClicked()
+                    onAction(SettingAction.OnBackClick)
                 }
             )
         }
@@ -79,17 +91,15 @@ fun SettingScreen(
                             text = stringResource(resource = Res.string.setting_style_theme_desc),
                             fontStyle = MaterialTheme.typography.bodySmall.fontStyle)
                     }
-                    var text by remember { mutableStateOf(viewModel.useDarkTheme.value.name) }
                     EconoSelectTextField(
-                        value = text,
+                        value = state.useDarkTheme.name,
                         options = ThemeMode.entries.map { it.name },
                         onValueChangedEvent = { value ->
                             when (value) {
-                                ThemeMode.SYSTEM.name -> viewModel.setDarkTheme(ThemeMode.SYSTEM)
-                                ThemeMode.LIGHT.name -> viewModel.setDarkTheme(ThemeMode.LIGHT)
-                                ThemeMode.DARK.name -> viewModel.setDarkTheme(ThemeMode.DARK)
+                                ThemeMode.SYSTEM.name -> onAction(SettingAction.OnThemeModeValueChange(ThemeMode.SYSTEM))
+                                ThemeMode.LIGHT.name -> onAction(SettingAction.OnThemeModeValueChange(ThemeMode.LIGHT))
+                                ThemeMode.DARK.name -> onAction(SettingAction.OnThemeModeValueChange(ThemeMode.DARK))
                             }
-                            text = value
                         },
                         modifier = Modifier.weight(0.4f)
                     )
@@ -110,10 +120,9 @@ fun SettingScreen(
                             fontStyle = MaterialTheme.typography.bodySmall.fontStyle)
                     }
 
-                    var value by remember { mutableStateOf("") }
                     EconoTextField(
-                        value = value,
-                        onValueChange = { value = it },
+                        value = state.useThemeColor,
+                        onValueChange = {  },
                         startIcon = null,
                         endIcon = null,
                         hints = "FF00FF",

@@ -4,6 +4,8 @@ import com.russhwolf.settings.ExperimentalSettingsApi
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.coroutines.toSuspendSettings
 import core.data.source.EconoSource
+import theme.COLOR
+import util.toStringColor
 
 @OptIn(ExperimentalSettingsApi::class)
 class PreferenceSourceImpl(settings: Settings): EconoSource.Preference {
@@ -21,15 +23,17 @@ class PreferenceSourceImpl(settings: Settings): EconoSource.Preference {
     }
 
     override suspend fun getThemeColor(): String {
-        TODO("Not yet implemented")
+        suspendSettings.getString(THEME_COLOR_THEME_KEY, COLOR.toStringColor()).let {
+            return it
+        }
     }
 
     override suspend fun setThemeColor(color: String) {
-        TODO("Not yet implemented")
+        suspendSettings.putString(THEME_COLOR_THEME_KEY, color)
     }
 
     companion object {
         private const val DARK_MODE_KEY = "DARK_MODE_KEY"
-//        private const val THEME_COLOR_THEME_KEY = "THEME_COLOR_THEME_KEY"
+        private const val THEME_COLOR_THEME_KEY = "THEME_COLOR_THEME_KEY"
     }
 }
