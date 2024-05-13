@@ -1,5 +1,7 @@
 package core.presentation.navigations
 
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
@@ -12,26 +14,10 @@ import moe.tlaster.precompose.navigation.transition.NavTransition
 
 fun swipeAnimationIOS(): NavTransition {
     return NavTransition(
-        createTransition = slideInHorizontally(initialOffsetX = { it }),
-        destroyTransition = slideOutHorizontally(targetOffsetX = { it }),
-        pauseTransition = fadeOut(targetAlpha = 0.5f),
-        resumeTransition = fadeIn(initialAlpha = 0.5f)
-    )
-}
-
-/**
- * @param spaceToSwipe The space to swipe to trigger the navigation
- * @param positionalThreshold The threshold to trigger the navigation
- * @param velocityThreshold The velocity threshold to trigger the navigation
- */
-fun swipeLikeIOS(
-    spaceToSwipe: Dp = 56.dp,
-    positionalThreshold: (totalDistance: Float) -> Float = { totalDistance -> totalDistance * 0.5f },
-    velocityThreshold: Density.() -> Float = { 56.dp.toPx() }
-) : SwipeProperties {
-    return SwipeProperties(
-        spaceToSwipe = spaceToSwipe,
-        positionalThreshold = positionalThreshold,
-        velocityThreshold =  velocityThreshold
+        createTransition = slideInHorizontally(tween(easing = LinearEasing)) { it },
+        destroyTransition = slideOutHorizontally(tween(easing = LinearEasing)) { it },
+        pauseTransition = slideOutHorizontally(tween(easing = LinearEasing)) { -it / 5 },
+        resumeTransition = slideInHorizontally(tween(easing = LinearEasing)) { -it / 5 },
+        exitTargetContentZIndex = 1f
     )
 }

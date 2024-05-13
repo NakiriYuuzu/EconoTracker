@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import core.presentation.expense.home.HomeScreen
 import core.presentation.setting.SettingScreen
 import core.presentation.splash.SplashScreen
@@ -17,6 +18,7 @@ import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.PopUpTo
 import moe.tlaster.precompose.navigation.RouteBuilder
+import moe.tlaster.precompose.navigation.SwipeProperties
 
 @Composable
 fun Navigation(
@@ -27,7 +29,7 @@ fun Navigation(
         navigator = navigator,
         initialRoute = NavigationGraph.SplashGroup.ROOT_ROUTE,
         navTransition = swipeAnimationIOS(),
-        swipeProperties = swipeLikeIOS()
+        swipeProperties = SwipeProperties(spaceToSwipe = 100.dp)
     ) {
         initialGraph(navigator)
         expenseGraph(navigator)
@@ -65,14 +67,14 @@ private fun RouteBuilder.expenseGraph(
         route = NavigationGraph.ExpenseGroup.ROOT_ROUTE,
         initialRoute = NavigationGraph.ExpenseGroup.Home.route
     ) {
-        scene(route = NavigationGraph.ExpenseGroup.Home.route,) {
+        scene(route = NavigationGraph.ExpenseGroup.Home.route) {
             HomeScreen(
                 onSettingClick = {
                     navigator.navigate(route = NavigationGraph.SettingGroup.ROOT_ROUTE)
                 }
             )
         }
-        scene(route = NavigationGraph.ExpenseGroup.Detail.route,) {
+        scene(route = NavigationGraph.ExpenseGroup.Detail.route) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,

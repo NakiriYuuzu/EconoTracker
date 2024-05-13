@@ -1,5 +1,7 @@
 package core.presentation.components
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -83,39 +85,56 @@ fun EconoTopBar(
         actions = {
             if (menuItems.isNotEmpty()) {
                 Box {
-                    DropdownMenu(
-                        expanded = isDropDownOpen,
-                        onDismissRequest = {
-                            isDropDownOpen = false
-                        }
+                    MaterialTheme(
+                        colorScheme = MaterialTheme.colorScheme.copy(surface = MaterialTheme.colorScheme.surfaceContainer),
+                        shapes = MaterialTheme.shapes.copy(extraSmall = MaterialTheme.shapes.medium)
                     ) {
-                        menuItems.forEachIndexed { index, item ->
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier
-                                    .clickable { isDropDownOpen = false; onMenuItemClick(index) }
-                                    .fillMaxWidth()
-                                    .padding(16.dp)
-                            ) {
-                                if (item.active) {
-                                    Icon(
-                                        imageVector = item.icon,
-                                        contentDescription = item.title.toString()
-                                    )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    item.title.invoke()
+                        DropdownMenu(
+                            expanded = isDropDownOpen,
+                            onDismissRequest = {
+                                isDropDownOpen = false
+                            },
+                            modifier = Modifier
+                                .background(
+                                    color = MaterialTheme.colorScheme.surfaceContainer,
+                                    shape = MaterialTheme.shapes.medium
+                                )
+                                .border(
+                                    width = 1.dp,
+                                    color = MaterialTheme.colorScheme.outlineVariant,
+                                    shape = MaterialTheme.shapes.medium
+                                )
+                        ) {
+                            menuItems.forEachIndexed { index, item ->
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier
+                                        .clickable {
+                                            isDropDownOpen = false; onMenuItemClick(index)
+                                        }
+                                        .fillMaxWidth()
+                                        .padding(16.dp)
+                                ) {
+                                    if (item.active) {
+                                        Icon(
+                                            imageVector = item.icon,
+                                            contentDescription = item.title.toString()
+                                        )
+                                        Spacer(modifier = Modifier.width(8.dp))
+                                        item.title.invoke()
+                                    }
                                 }
                             }
                         }
-                    }
-                    IconButton(onClick = {
-                        isDropDownOpen = true
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.MoreVert,
-                            contentDescription = stringResource(resource = Res.string.btn_open_menu),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
+                        IconButton(onClick = {
+                            isDropDownOpen = true
+                        }) {
+                            Icon(
+                                imageVector = Icons.Default.MoreVert,
+                                contentDescription = stringResource(resource = Res.string.btn_open_menu),
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
                     }
                 }
             }

@@ -20,8 +20,10 @@ class MainViewModel(
 
     fun setDarkTheme(theme: ThemeMode) {
         viewModelScope.launch {
+            println("Before: $theme")
             _useDarkTheme.value = theme
             preference.setDarkMode(theme)
+            println("After: ${preference.getThemeMode()}")
         }
     }
 }

@@ -5,7 +5,8 @@
     <string name="setting_style_title">Styles</string>
     <string name="setting_style_theme_title">Dark Mode</string>
     <string name="setting_style_theme_desc">Choose your preferred app theme</string>
-    <string name="setting_style_light">Light</string>
+    <string name="setting_color_theme_title">Color Theme</string>
+    <string name="setting_color_theme_desc">Customize your own theme with color code</string>
     <string name="btn_go_back">Go back</string>
     <string name="btn_open_menu">Open menu</string>
 </resources>
