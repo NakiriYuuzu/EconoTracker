@@ -3,9 +3,9 @@ package core.data.source.preference
 import com.russhwolf.settings.ExperimentalSettingsApi
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.coroutines.toSuspendSettings
-import core.data.source.EconoSource
+import core.domain.source.EconoSource
 import theme.COLOR
-import util.toStringColor
+import util.toLongColorString
 
 @OptIn(ExperimentalSettingsApi::class)
 class PreferenceSourceImpl(settings: Settings): EconoSource.Preference {
@@ -18,18 +18,18 @@ class PreferenceSourceImpl(settings: Settings): EconoSource.Preference {
         }
     }
 
-    override suspend fun setDarkMode(theme: ThemeMode) {
+    override suspend fun setThemeMode(theme: ThemeMode) {
         suspendSettings.putString(DARK_MODE_KEY, theme.name)
     }
 
-    override suspend fun getThemeColor(): String {
-        suspendSettings.getString(THEME_COLOR_THEME_KEY, COLOR.toStringColor()).let {
+    override suspend fun getThemeColor(): Long {
+        suspendSettings.getLong(THEME_COLOR_THEME_KEY, COLOR).let {
             return it
         }
     }
 
     override suspend fun setThemeColor(color: String) {
-        suspendSettings.putString(THEME_COLOR_THEME_KEY, color)
+        suspendSettings.putLong(THEME_COLOR_THEME_KEY, color.toLongColorString())
     }
 
     companion object {

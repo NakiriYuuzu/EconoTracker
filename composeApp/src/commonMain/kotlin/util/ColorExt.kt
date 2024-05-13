@@ -1,14 +1,7 @@
 package util
 
-import androidx.compose.ui.graphics.Color
-
-fun Long.toColor() : Color {
-    this.toString(16)
-    return Color(this.toInt())
-}
-
 fun Long.toStringColor() : String {
-    val colorString = this.toString(16)
+    val colorString = this.toString(16).uppercase()
     return if (colorString.length > 6) {
         colorString.substring(2, 8)
     } else {
@@ -16,6 +9,6 @@ fun Long.toStringColor() : String {
     }
 }
 
-fun String.toLongColor() : Long {
+fun String.toLongColorString() : Long {
     return "ff$this".toLong(16)
 }

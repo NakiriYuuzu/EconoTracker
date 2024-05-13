@@ -12,10 +12,10 @@ const val COLOR = 0xFF63A002
 @Composable
 fun EconoTheme(
     seedColor: Color = Color(color = COLOR),
-    useDarkTheme: ThemeMode,
+    themeMode: ThemeMode,
     content: @Composable () -> Unit
 ) {
-    val isDarkTheme = when (useDarkTheme) {
+    val isDarkTheme = when (themeMode) {
         ThemeMode.SYSTEM -> isSystemInDarkTheme()
         ThemeMode.LIGHT -> false
         ThemeMode.DARK -> true

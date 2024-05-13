@@ -1,4 +1,4 @@
-package core.data.source
+package core.domain.source
 
 import core.data.source.preference.ThemeMode
 
@@ -13,8 +13,8 @@ interface EconoSource {
 
     interface Preference {
         suspend fun getThemeMode(): ThemeMode
-        suspend fun setDarkMode(theme: ThemeMode)
-        suspend fun getThemeColor(): String
+        suspend fun setThemeMode(theme: ThemeMode)
+        suspend fun getThemeColor(): Long
         suspend fun setThemeColor(color: String)
     }
 }

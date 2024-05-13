@@ -92,7 +92,7 @@ fun SettingScreen(
                             fontStyle = MaterialTheme.typography.bodySmall.fontStyle)
                     }
                     EconoSelectTextField(
-                        value = state.useDarkTheme.name,
+                        value = state.themeMode.name,
                         options = ThemeMode.entries.map { it.name },
                         onValueChangedEvent = { value ->
                             when (value) {
@@ -121,12 +121,13 @@ fun SettingScreen(
                     }
 
                     EconoTextField(
-                        value = state.useThemeColor,
-                        onValueChange = {  },
+                        value = state.themeColor,
+                        onValueChange = { onAction(SettingAction.OnThemeColorValueChange(it)) },
                         startIcon = null,
                         endIcon = null,
                         hints = "FF00FF",
                         title = null,
+                        error = state.themeValidatorState.currentError,
                         modifier = Modifier.weight(0.4f)
                     )
                 }

@@ -2,11 +2,14 @@ package di
 
 import MainViewModel
 import com.russhwolf.settings.Settings
-import core.data.source.EconoSource
+import core.data.repository.SettingRepositoryImpl
+import core.domain.source.EconoSource
 import core.data.source.preference.PreferenceSourceImpl
 import core.data.source.remote.AdhdApi
 import core.data.source.remote.KtorfitFactory
+import core.domain.repository.SettingRepository
 import core.presentation.setting.SettingViewModel
+import core.presentation.setting.validator.SettingValidator
 import de.jensklingenberg.ktorfit.Ktorfit
 import logging.KermitLogger
 import logging.Logger
@@ -26,6 +29,11 @@ val serviceModule = module {
     single<AdhdApi> { get<Ktorfit>().create() }
 }
 
+val repositoryModule = module {
+    singleOf(::SettingValidator)
+    single<SettingRepository> { SettingRepositoryImpl(get()) }
+}
+
 val viewModelModule = module {
     singleOf(::MainViewModel)
     singleOf(::SettingViewModel)
@@ -34,5 +42,6 @@ val viewModelModule = module {
 val appModules = listOf(
     appModule,
     serviceModule,
+    repositoryModule,
     viewModelModule
 )
