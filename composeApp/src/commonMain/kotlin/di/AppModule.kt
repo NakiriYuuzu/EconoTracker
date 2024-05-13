@@ -36,7 +36,7 @@ val repositoryModule = module {
 
 val viewModelModule = module {
     singleOf(::MainViewModel)
-    singleOf(::SettingViewModel)
+    factoryOf(::SettingViewModel)
 }
 
 val appModules = listOf(
