@@ -46,7 +46,7 @@ fun EconoTextField(
     hints: String,
     title: String?,
     startIcon: ImageVector?,
-    endIcon: ImageVector?,
+    endIcon: (@Composable () -> Unit)? = null,
     error: String? = null,
     modifier: Modifier = Modifier,
     imeAction: ImeAction = ImeAction.Done,
@@ -143,11 +143,7 @@ fun EconoTextField(
                     }
                     if (endIcon != null) {
                         Spacer(modifier = Modifier.width(16.dp))
-                        Icon(
-                            imageVector = endIcon,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
+                        endIcon()
                     }
                 }
             },
@@ -173,8 +169,63 @@ fun EconoTextField(
                 )
                 .padding(12.dp)
                 .onFocusChanged { isFocused = it.isFocused }
-
         )
+    }
+}
+
+//@OptIn(ExperimentalFoundationApi::class)
+//@Composable
+//fun EconoTextField2(
+//    state: TextFieldState,
+//    hints: String,
+//    title: String?,
+//    startIcon: ImageVector?,
+//    endIcon: ImageVector?,
+//    error: String? = null,
+//    modifier: Modifier = Modifier,
+//    imeAction: ImeAction = ImeAction.Done,
+//    keyboardType: KeyboardType = KeyboardType.Text,
+//    inputTransformation: InputTransformation? = null,
+//    additionalInfo: String? = null,
+//    onDone: () -> Unit = {},
+//) {
+//    val focusManager = LocalFocusManager.current
+//    val keyboardState by keyboardVisibilityAsState()
+//    var isFocused by remember { mutableStateOf(false) }
+//
+//    LaunchedEffect(keyboardState) {
+//        if (keyboardState == KeyboardState.Closed) focusManager.clearFocus()
+//    }
+//
+//    Column(
+//        modifier = modifier
+//    ) {
+//        Row(
+//            modifier = Modifier.fillMaxWidth(),
+//            horizontalArrangement = Arrangement.SpaceBetween,
+//            verticalAlignment = Alignment.CenterVertically
+//        ) {
+//            if (title != null) {
+//                Text(
+//                    text = title,
+//                    color = MaterialTheme.colorScheme.onSurfaceVariant
+//                )
+//            }
+//            if (error != null) {
+//                Text(
+//                    text = error,
+//                    color = MaterialTheme.colorScheme.error,
+//                    fontSize = 12.sp
+//                )
+//            } else if (additionalInfo != null) {
+//                Text(
+//                    text = additionalInfo,
+//                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+//                    fontSize = 12.sp
+//                )
+//            }
+//        }
+//        Spacer(modifier = Modifier.height(4.dp))
 //        BasicTextField2(
 //            state = state,
 //            textStyle = LocalTextStyle.current.copy(
@@ -197,7 +248,7 @@ fun EconoTextField(
 //            lineLimits = TextFieldLineLimits.SingleLine,
 //            cursorBrush = SolidColor(MaterialTheme.colorScheme.onBackground),
 //            modifier = Modifier
-//                .clip(RoundedCornerShape(8.dp))
+//                .clip(MaterialTheme.shapes.small)
 //                .background(
 //                    if (isFocused) {
 //                        MaterialTheme.colorScheme.primary.copy(
@@ -214,7 +265,7 @@ fun EconoTextField(
 //                    } else {
 //                        MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
 //                    },
-//                    shape = RoundedCornerShape(8.dp)
+//                    shape = MaterialTheme.shapes.small
 //                )
 //                .padding(12.dp)
 //                .onFocusChanged { isFocused = it.isFocused },
@@ -258,5 +309,5 @@ fun EconoTextField(
 //                }
 //            }
 //        )
-    }
-}
+//    }
+//}
