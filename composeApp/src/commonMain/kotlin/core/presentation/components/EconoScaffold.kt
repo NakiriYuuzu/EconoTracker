@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 @Composable
 fun EconoScaffold(
     modifier: Modifier = Modifier,
+    gradient: Boolean = true,
     topAppBar: @Composable () -> Unit = {},
     floatingActionButton: @Composable () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit
@@ -19,6 +20,10 @@ fun EconoScaffold(
         floatingActionButtonPosition = FabPosition.Center,
         modifier = modifier
     ) { padding ->
-        content(padding)
+        if (gradient) {
+            EconoBackground {
+                content(padding)
+            }
+        } else content(padding)
     }
 }

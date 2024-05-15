@@ -11,6 +11,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import core.presentation.components.EconoBackground
 import core.presentation.components.EconoScaffold
 import core.presentation.components.EconoTopBar
 import core.presentation.components.utils.DropDownItem
@@ -36,14 +37,14 @@ fun HomeScreen(
                 }
             )
         }) { padding ->
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-        ) {
-
-        }
+//        Column(
+//            verticalArrangement = Arrangement.Center,
+//            horizontalAlignment = Alignment.CenterHorizontally,
+//            modifier = Modifier
+//                .fillMaxSize()
+//                .padding(padding)
+//        ) {
+//
+//        }
     }
 }

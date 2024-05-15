@@ -14,7 +14,7 @@ kotlin = "1.9.23"
 # Compiler & plugin
 ksp = "1.9.23-1.0.20"
 kotlinx-serialization = "1.6.3"
-kotlinx-datetime = "0.6.0-RC.2"
+kotlinx-datetime = "0.6.0"
 
 # ViewModel & Navigation
 precompose = "1.6.0"
@@ -29,8 +29,8 @@ ktor = "2.3.10"
 ktorfit = "2.0.0-beta1"
 
 # local
-room = "2.7.0-alpha01"
-sqlite = "2.5.0-alpha01"
+room = "2.7.0-alpha02"
+sqlite = "2.5.0-alpha02"
 multiplatformSettings = "1.1.1"
 
 # Dependency Injection

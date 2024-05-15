@@ -1,11 +1,14 @@
 package core.presentation.setting
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -29,6 +32,7 @@ import econotracker.composeapp.generated.resources.setting_style_theme_title
 import econotracker.composeapp.generated.resources.setting_style_title
 import moe.tlaster.precompose.koin.koinViewModel
 import org.jetbrains.compose.resources.stringResource
+import util.toColor
 
 @Composable
 fun SettingScreenRoot(
@@ -124,7 +128,15 @@ fun SettingScreen(
                         value = state.themeColor,
                         onValueChange = { onAction(SettingAction.OnThemeColorValueChange(it)) },
                         startIcon = null,
-                        endIcon = null,
+                        endIcon = {
+                            if (state.themeValidatorState.isValidColor) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(24.dp)
+                                        .background(state.themeColor.toColor())
+                                )
+                            }
+                        },
                         hints = "FF00FF",
                         title = null,
                         error = state.themeValidatorState.currentError,
