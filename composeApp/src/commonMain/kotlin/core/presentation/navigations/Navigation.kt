@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import core.presentation.expense.home.HomeScreen
+import core.presentation.expense.home.HomeScreenRoot
 import core.presentation.setting.SettingScreenRoot
 import core.presentation.splash.SplashScreen
 import moe.tlaster.precompose.navigation.NavHost
@@ -24,7 +24,7 @@ fun Navigation(navigator: Navigator) {
     NavHost(
         navigator = navigator,
         initialRoute = NavigationGraph.SplashGroup.ROOT_ROUTE,
-        navTransition = swipeAnimationIOS(),
+        navTransition = navIosTransition(),
         swipeProperties = SwipeProperties(spaceToSwipe = 100.dp)
     ) {
         initialGraph(navigator)
@@ -64,7 +64,7 @@ private fun RouteBuilder.expenseGraph(
         initialRoute = NavigationGraph.ExpenseGroup.Home.route
     ) {
         scene(route = NavigationGraph.ExpenseGroup.Home.route) {
-            HomeScreen(
+            HomeScreenRoot(
                 onSettingClick = {
                     navigator.navigate(route = NavigationGraph.SettingGroup.ROOT_ROUTE)
                 }

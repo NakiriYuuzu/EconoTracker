@@ -14,6 +14,12 @@ import econotracker.composeapp.generated.resources.poppins_regular
 import econotracker.composeapp.generated.resources.poppins_semibold
 import org.jetbrains.compose.resources.Font
 
+/**
+ * Label typography is small
+ * Body typography is medium
+ * Headline typography is large
+ * @return [Typography] with Poppins font family
+ */
 @Composable
 fun PoppinsTypography(): Typography {
     val poppins = FontFamily(
@@ -40,6 +46,24 @@ fun PoppinsTypography(): Typography {
     )
 
     return Typography(
+        labelSmall = TextStyle(
+            fontFamily = poppins,
+            fontWeight = FontWeight.Normal,
+            fontSize = 12.sp,
+            lineHeight = 20.sp,
+        ),
+        labelMedium = TextStyle(
+            fontFamily = poppins,
+            fontWeight = FontWeight.Normal,
+            fontSize = 13.sp,
+            lineHeight = 22.sp,
+        ),
+        labelLarge = TextStyle(
+            fontFamily = poppins,
+            fontWeight = FontWeight.Normal,
+            fontSize = 14.sp,
+            lineHeight = 24.sp,
+        ),
         bodySmall = TextStyle(
             fontFamily = poppins,
             fontWeight = FontWeight.Normal,
@@ -59,15 +83,29 @@ fun PoppinsTypography(): Typography {
             lineHeight = 24.sp,
             letterSpacing = 0.5.sp,
         ),
-        labelLarge = TextStyle(
+        titleSmall = TextStyle(
             fontFamily = poppins,
-            fontWeight = FontWeight.Normal,
-            fontSize = 14.sp,
-            lineHeight = 24.sp,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 16.sp
+        ),
+        titleMedium = TextStyle(
+            fontFamily = poppins,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 20.sp
+        ),
+        titleLarge = TextStyle(
+            fontFamily = poppins,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 24.sp
+        ),
+        headlineSmall = TextStyle(
+            fontFamily = poppins,
+            fontWeight = FontWeight.Bold,
+            fontSize = 18.sp
         ),
         headlineMedium = TextStyle(
             fontFamily = poppins,
-            fontWeight = FontWeight.SemiBold,
+            fontWeight = FontWeight.Bold,
             fontSize = 24.sp
         )
     )

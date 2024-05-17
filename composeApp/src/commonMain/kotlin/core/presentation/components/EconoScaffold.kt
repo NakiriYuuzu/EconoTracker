@@ -21,7 +21,7 @@ fun EconoScaffold(
         modifier = modifier
     ) { padding ->
         if (gradient) {
-            EconoBackground {
+            EconoBackground(hasToolbar = true) {
                 content(padding)
             }
         } else content(padding)
