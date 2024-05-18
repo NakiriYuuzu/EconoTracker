@@ -74,8 +74,11 @@ fun HomeScreen(
 }
 
 @Composable
-private fun EconoBalanceCard(
+fun EconoBalanceCard(
     modifier: Modifier = Modifier,
+    totalBalance: String = "$1000.00",
+    income: String = "$1,000,000,000.00",
+    expense: String = "$1,000,000,000.00",
     isAmountPositive: Boolean = false,
 ) {
     ElevatedCard(
@@ -93,7 +96,7 @@ private fun EconoBalanceCard(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     EconoIconText(
                         text = "Total Balance",
-                        style = MaterialTheme.typography.titleMedium,
+                        style = MaterialTheme.typography.titleSmall,
                         endIcon = {
                             Icon(
                                 imageVector = Icons.TwoTone.ArrowDropDown,
@@ -105,7 +108,7 @@ private fun EconoBalanceCard(
                     )
                 }
                 Text(
-                    text = "$ 1,000.00",
+                    text = totalBalance,
                     style = MaterialTheme.typography.headlineMedium,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -140,7 +143,7 @@ private fun EconoBalanceCard(
                     modifier = Modifier.align(Alignment.Start)
                 )
                 Text(
-                    text = "$1,000,000,000.00",
+                    text = income,
                     style = MaterialTheme.typography.headlineSmall,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -165,7 +168,7 @@ private fun EconoBalanceCard(
                     modifier = Modifier.align(Alignment.End)
                 )
                 Text(
-                    text = "$1,000,000,000.00",
+                    text = expense,
                     style = MaterialTheme.typography.headlineSmall,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis

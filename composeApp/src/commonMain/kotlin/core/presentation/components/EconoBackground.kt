@@ -1,7 +1,6 @@
 package core.presentation.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -13,8 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalDensity
-import core.data.source.preference.ThemeMode
-import util.LocalSettingState
 import util.getScreenHeightDp
 import util.getScreenWidthDp
 
@@ -24,7 +21,6 @@ fun EconoBackground(
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    val localState = LocalSettingState.current
     val density = LocalDensity.current
 
     val screenWidthPx = with(density) {

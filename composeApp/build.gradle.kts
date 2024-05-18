@@ -1,23 +1,27 @@
 import org.jetbrains.compose.ComposeExtension
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
+//    alias(libs.plugins.jetbrainsCompiler)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.ktorfit)
-//    alias(libs.plugins.room)
+    alias(libs.plugins.room)
 }
 
 kotlin {
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     compilerOptions {
         freeCompilerArgs.add("-Xexpect-actual-classes")
+        languageVersion.set(KotlinVersion.KOTLIN_1_9)
+        apiVersion.set(KotlinVersion.KOTLIN_1_9)
     }
 
-    jvmToolchain(17)
+    jvmToolchain(20)
 
     androidTarget()
     
@@ -29,6 +33,8 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+            // Required when using NativeSQLiteDriver
+//            linkerOpts.add("-lsqlite3")
         }
     }
     
@@ -53,7 +59,7 @@ kotlin {
             implementation(libs.kermit.core)
             implementation(libs.windowSizeClass)
 
-//            implementation(libs.bundles.room)
+            implementation(libs.bundles.room)
             implementation(libs.bundles.koin.main)
             implementation(libs.bundles.kotlinx)
             implementation(libs.bundles.ktorfit)
@@ -100,20 +106,20 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_20
+        targetCompatibility = JavaVersion.VERSION_20
     }
     dependencies {
         debugImplementation(compose.uiTooling)
     }
 }
 
-//room {
-//    schemaDirectory("$projectDir/schemas")
-//}
+room {
+    schemaDirectory("$projectDir/schemas")
+}
 
 dependencies {
-//    ksp(libs.room.compiler)
+    ksp(libs.room.compiler)
     with(libs.ktorfit.ksp) {
         add("kspCommonMainMetadata", this)
         add("kspAndroid", this)
@@ -126,3 +132,5 @@ dependencies {
         add("kspIosSimulatorArm64Test", this)
     }
 }
+
+task("testClasses")
