@@ -1,30 +1,33 @@
-import org.jetbrains.compose.ComposeExtension
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
-//    alias(libs.plugins.jetbrainsCompiler)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.ktorfit)
     alias(libs.plugins.room)
+//    alias(libs.plugins.ktorfit)
 }
 
 kotlin {
-    @OptIn(ExperimentalKotlinGradlePluginApi::class)
-    compilerOptions {
-        freeCompilerArgs.add("-Xexpect-actual-classes")
-        languageVersion.set(KotlinVersion.KOTLIN_1_9)
-        apiVersion.set(KotlinVersion.KOTLIN_1_9)
+    sourceSets.commonMain {
+        kotlin.srcDir("build/generated/ksp/metadata")
     }
 
-    jvmToolchain(20)
+    jvmToolchain(11)
+    androidTarget {
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
+            apiVersion.set(KotlinVersion.KOTLIN_2_0)
+            languageVersion.set(KotlinVersion.KOTLIN_2_0)
+        }
+    }
 
-    androidTarget()
-    
     listOf(
         iosX64(),
         iosArm64(),
@@ -33,18 +36,16 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
-            // Required when using NativeSQLiteDriver
-//            linkerOpts.add("-lsqlite3")
         }
     }
-    
+
     sourceSets {
         androidMain.dependencies {
+            implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+
             implementation(libs.bundles.koin.android)
-            api(compose.preview)
-            api(compose.uiTooling)
-            api(compose.components.uiToolingPreview)
+            implementation(libs.room.runtime.android)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -67,6 +68,8 @@ kotlin {
             implementation(libs.bundles.multiplatformSettings)
         }
     }
+
+    task("testClasses")
 }
 
 android {
@@ -84,16 +87,8 @@ android {
         versionCode = 1
         versionName = "1.0"
     }
-    buildToolsVersion = "34.0.0"
     buildFeatures {
         compose = true
-    }
-    composeOptions {
-        val fullVersion = extensions.getByType(ComposeExtension::class.java)
-            .dependencies.compiler.auto.substringAfterLast(":")
-        val mainVersion = fullVersion.split(".").take(3).joinToString(".")
-        kotlinCompilerExtensionVersion = mainVersion
-
     }
     packaging {
         resources {
@@ -106,8 +101,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_20
-        targetCompatibility = JavaVersion.VERSION_20
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     dependencies {
         debugImplementation(compose.uiTooling)
@@ -119,18 +114,12 @@ room {
 }
 
 dependencies {
-    ksp(libs.room.compiler)
-    with(libs.ktorfit.ksp) {
-        add("kspCommonMainMetadata", this)
-        add("kspAndroid", this)
-        add("kspAndroidTest", this)
-        add("kspIosX64", this)
-        add("kspIosX64Test", this)
-        add("kspIosArm64", this)
-        add("kspIosArm64Test", this)
-        add("kspIosSimulatorArm64", this)
-        add("kspIosSimulatorArm64Test", this)
-    }
+    // Room
+    add("kspCommonMainMetadata", libs.room.compiler)
 }
 
-task("testClasses")
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask<*>>().configureEach {
+    if (name != "kspCommonMainKotlinMetadata" ) {
+        dependsOn("kspCommonMainKotlinMetadata")
+    }
+}
