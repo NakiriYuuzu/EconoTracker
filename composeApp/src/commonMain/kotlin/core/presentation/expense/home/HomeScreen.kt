@@ -17,6 +17,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -69,6 +70,9 @@ fun HomeScreen(
             EconoBalanceCard(
                 modifier = Modifier.fillMaxWidth().padding(16.dp)
             )
+            EconoTransaction(
+                modifier = Modifier.fillMaxWidth().padding(16.dp)
+            )
         }
     }
 }
@@ -76,8 +80,8 @@ fun HomeScreen(
 @Composable
 fun EconoBalanceCard(
     modifier: Modifier = Modifier,
-    totalBalance: String = "$1000.00",
-    income: String = "$1,000,000,000.00",
+    totalBalance: String = "$1,000.00",
+    income: String = "$1,000,000.00",
     expense: String = "$1,000,000,000.00",
     isAmountPositive: Boolean = false,
 ) {
@@ -173,6 +177,31 @@ fun EconoBalanceCard(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
+            }
+        }
+    }
+}
+
+@Composable
+fun EconoTransaction(
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = "Transaction History",
+                style = MaterialTheme.typography.titleSmall,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            TextButton(onClick = { /*TODO*/ }) {
+                Text(text = "View All")
             }
         }
     }

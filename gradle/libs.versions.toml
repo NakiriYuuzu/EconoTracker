@@ -33,8 +33,8 @@ ktor = "2.3.11"
 ktorfit = "2.0.0"
 
 # local
-room = "2.7.0-alpha03"
-sqlite = "2.5.0-alpha03"
+room = "2.7.0-alpha04"
+sqlite = "2.5.0-alpha04"
 multiplatformSettings = "1.1.1"
 
 # Dependency Injection

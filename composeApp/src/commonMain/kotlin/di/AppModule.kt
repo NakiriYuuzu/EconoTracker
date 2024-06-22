@@ -22,10 +22,10 @@ val appModule = module {
     factoryOf(::PreferenceSourceImpl).bind(EconoSource.Preference::class)
 }
 
-val networkModule = module {
-    single<Ktorfit> { KtorfitFactory().build() }
-    single<AdhdApi> { get<Ktorfit>().create() }
-}
+//val networkModule = module {
+//    single<Ktorfit> { KtorfitFactory().build() }
+//    single<AdhdApi> { get<Ktorfit>() }
+//}
 
 val serviceModule = module {
     factoryOf<Logger>(::KermitLogger)
@@ -45,7 +45,7 @@ val viewModelModule = module {
 val appModules = listOf(
     appModule,
     platformModule(),
-    networkModule,
+//    networkModule,
     serviceModule,
     repositoryModule,
     viewModelModule
