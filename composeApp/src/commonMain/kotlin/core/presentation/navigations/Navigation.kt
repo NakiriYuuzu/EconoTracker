@@ -23,8 +23,8 @@ import moe.tlaster.precompose.navigation.SwipeProperties
 fun Navigation(navigator: Navigator) {
     NavHost(
         navigator = navigator,
-//        initialRoute = NavigationGraph.SplashGroup.ROOT_ROUTE,
-        initialRoute = NavigationGraph.ExpenseGroup.ROOT_ROUTE,
+        initialRoute = NavigationGraph.SplashGroup.ROOT_ROUTE,
+//        initialRoute = NavigationGraph.ExpenseGroup.ROOT_ROUTE,
         navTransition = navIosTransition(),
         swipeProperties = SwipeProperties(spaceToSwipe = 100.dp)
     ) {

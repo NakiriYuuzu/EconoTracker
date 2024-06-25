@@ -20,19 +20,13 @@ kotlin {
 
     jvmToolchain(11)
 
-    @OptIn(ExperimentalKotlinGradlePluginApi::class)
-    compilerOptions {
-//        apiVersion.set(KotlinVersion.KOTLIN_2_0)
-//        languageVersion.set(KotlinVersion.KOTLIN_2_0)
-        freeCompilerArgs.add("-Xexpect-actual-classes")
-    }
-
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
             apiVersion.set(KotlinVersion.KOTLIN_2_0)
             languageVersion.set(KotlinVersion.KOTLIN_2_0)
+            freeCompilerArgs.add("-Xexpect-actual-classes")
         }
     }
 
@@ -57,6 +51,7 @@ kotlin {
         }
         commonMain.dependencies {
             implementation(compose.runtime)
+            implementation(compose.animation)
             implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.ui)
