@@ -5,12 +5,9 @@ import com.russhwolf.settings.Settings
 import core.data.repository.SettingRepositoryImpl
 import core.domain.source.EconoSource
 import core.data.source.preference.PreferenceSourceImpl
-import core.data.source.remote.AdhdApi
-import core.data.source.remote.KtorfitFactory
 import core.domain.repository.SettingRepository
 import core.presentation.setting.SettingViewModel
-import core.presentation.setting.validator.SettingValidator
-import de.jensklingenberg.ktorfit.Ktorfit
+import core.domain.validator.SettingValidator
 import logging.KermitLogger
 import logging.Logger
 import org.koin.core.module.dsl.factoryOf
@@ -32,8 +29,11 @@ val serviceModule = module {
     factoryOf<Settings>(::Settings)
 }
 
-val repositoryModule = module {
+val validatorModule = module {
     singleOf(::SettingValidator)
+}
+
+val repositoryModule = module {
     single<SettingRepository> { SettingRepositoryImpl(get()) }
 }
 
@@ -47,6 +47,7 @@ val appModules = listOf(
     platformModule(),
 //    networkModule,
     serviceModule,
+    validatorModule,
     repositoryModule,
     viewModelModule
 )

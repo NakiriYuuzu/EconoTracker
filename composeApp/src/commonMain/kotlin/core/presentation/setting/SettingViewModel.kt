@@ -3,53 +3,55 @@ package core.presentation.setting
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import core.data.source.preference.ThemeMode
 import core.domain.repository.SettingRepository
-import core.presentation.setting.validator.SettingValidator
+import core.domain.validator.SettingValidator
 import kotlinx.coroutines.launch
-import moe.tlaster.precompose.viewmodel.ViewModel
-import moe.tlaster.precompose.viewmodel.viewModelScope
 
 class SettingViewModel(
-    private val settingRepository: SettingRepository,
-    private val settingValidator: SettingValidator
+    private val validator: SettingValidator,
+    private val repository: SettingRepository
 ): ViewModel() {
-    private val settingState = settingRepository.state
-
     var state by mutableStateOf(SettingState())
         private set
 
     init {
         viewModelScope.launch {
+            val colorValidate = validator.validateColor(repository.getThemeColor())
             state = state.copy(
-                themeMode = settingState.value.themeMode,
-                themeColor = settingState.value.themeColor,
-                themeValidatorState = settingValidator.validateColor(settingState.value.themeColor)
+                themeMode = repository.getThemeMode(),
+                themeColor = repository.getThemeColor(),
+                isValidColor = colorValidate.isValidColor
             )
         }
     }
 
     fun onAction(action: SettingAction) {
         when (action) {
-            is SettingAction.OnThemeColorValueChange -> {
-                val colorValidation = settingValidator.validateColor(action.color)
-                if (action.color.length <= 6) state = state.copy(
-                    themeColor = action.color,
-                    themeValidatorState = colorValidation,
-                    canChangeThemeColor = colorValidation.isValidColor
-                )
-                if (state.canChangeThemeColor) {
-                    viewModelScope.launch {
-                        settingRepository.updateThemeColor(action.color)
-                    }
-                }
-            }
-            is SettingAction.OnThemeModeValueChange -> {
-                state = state.copy(themeMode = action.theme)
-                viewModelScope.launch {
-                    settingRepository.updateThemeMode(action.theme)
-                }
-            }
+            is SettingAction.OnThemeColorValueChange -> changeThemeColor(action.color)
+            is SettingAction.OnThemeModeValueChange -> changeThemeMode(action.theme)
             else -> Unit
         }
+    }
+
+    private fun changeThemeColor(color: String) {
+        val colorValidate = validator.validateColor(color)
+
+        if (color.length <= 6) state = state.copy(
+            themeColor = color,
+            isValidColor = colorValidate.isValidColor,
+            settingValidatorState = colorValidate
+        )
+
+        if (state.isValidColor) {
+            viewModelScope.launch { repository.setThemeColor(color) }
+        }
+    }
+
+    private fun changeThemeMode(theme: ThemeMode) {
+        state = state.copy(themeMode = theme)
+        viewModelScope.launch { repository.setThemeMode(theme) }
     }
 }

@@ -110,7 +110,8 @@ fun EconoTopBar(
                                     verticalAlignment = Alignment.CenterVertically,
                                     modifier = Modifier
                                         .clickable {
-                                            isDropDownOpen = false; onMenuItemClick(index)
+                                            isDropDownOpen = false
+                                            onMenuItemClick(index)
                                         }
                                         .fillMaxWidth()
                                         .padding(16.dp)

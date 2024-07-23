@@ -63,11 +63,11 @@ kotlin {
             implementation(libs.kermit.core)
             implementation(libs.windowSizeClass)
 
+            implementation(libs.bundles.core)
             implementation(libs.bundles.room)
             implementation(libs.bundles.koin.main)
             implementation(libs.bundles.kotlinx)
             implementation(libs.bundles.ktorfit)
-            implementation(libs.bundles.precompose)
             implementation(libs.bundles.multiplatformSettings)
         }
     }

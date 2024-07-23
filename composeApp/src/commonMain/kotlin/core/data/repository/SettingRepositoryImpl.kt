@@ -26,12 +26,12 @@ class SettingRepositoryImpl(
         return preference.getThemeColor().toStringColor()
     }
 
-    override suspend fun updateThemeMode(theme: ThemeMode) {
+    override suspend fun setThemeMode(theme: ThemeMode) {
         _state.value = _state.value.copy(themeMode = theme)
         preference.setThemeMode(theme)
     }
 
-    override suspend fun updateThemeColor(color: String) {
+    override suspend fun setThemeColor(color: String) {
         _state.value = _state.value.copy(themeColor = color)
         preference.setThemeColor(color)
     }

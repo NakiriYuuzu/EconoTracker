@@ -30,13 +30,13 @@ import econotracker.composeapp.generated.resources.setting_color_theme_title
 import econotracker.composeapp.generated.resources.setting_style_theme_desc
 import econotracker.composeapp.generated.resources.setting_style_theme_title
 import econotracker.composeapp.generated.resources.setting_style_title
-import moe.tlaster.precompose.koin.koinViewModel
 import org.jetbrains.compose.resources.stringResource
+import util.koinViewModel
 import util.toColor
 
 @Composable
 fun SettingScreenRoot(
-    viewModel: SettingViewModel = koinViewModel(SettingViewModel::class),
+    viewModel: SettingViewModel = koinViewModel(),
     onBackClicked: () -> Unit
 ) {
     SettingScreen(
@@ -129,7 +129,7 @@ fun SettingScreen(
                         onValueChange = { onAction(SettingAction.OnThemeColorValueChange(it)) },
                         startIcon = null,
                         endIcon = {
-                            if (state.themeValidatorState.isValidColor) {
+                            if (state.isValidColor) {
                                 Box(
                                     modifier = Modifier
                                         .size(24.dp)
@@ -139,7 +139,7 @@ fun SettingScreen(
                         },
                         hints = "FF00FF",
                         title = null,
-                        error = state.themeValidatorState.currentError,
+                        error = if (state.settingValidatorState.isValidColor) null else "Invalid color",
                         modifier = Modifier.weight(0.4f)
                     )
                 }

@@ -16,4 +16,6 @@ fun <T, E: Error> Result<T, E>.asEmptyDataResult(): EmptyResult<E> {
     return map {  }
 }
 
+interface Error
+
 typealias EmptyResult<E> = Result<Unit, E>

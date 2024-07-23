@@ -54,6 +54,7 @@ fun SplashScreen(
                     painter = painterResource(Res.drawable.compose_multiplatform),
                     contentDescription = null,
                 )
+
                 Text(
                     text = "Splash Screen",
                     style = MaterialTheme.typography.labelLarge,

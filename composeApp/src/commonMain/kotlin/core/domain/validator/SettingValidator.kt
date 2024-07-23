@@ -1,4 +1,4 @@
-package core.presentation.setting.validator
+package core.domain.validator
 
 class SettingValidator {
     fun validateColor(color: String): SettingValidatorState {
